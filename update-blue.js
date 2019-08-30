@@ -12,46 +12,88 @@ const cheerio = require('cheerio');
 const find = require('find');
 const md2html = require('./md2html.js');
 const yaml = require('js-yaml');
+const chokidar = require('chokidar');
 
 const env = yaml.safeLoad(fs.readFileSync('./.env.yaml', 'utf8'));
 
 const web_page = env.web_page;
+const log = console.log.bind(console);
+const watcher = chokidar.watch(path.join(env.watch_folder, '*.md'), {
+})
 
-let fsWait = false;
-fs.watch(env.watch_folder, (e,filename) =>{
-  if (filename) {
-    if (fsWait) return;
-    fsWait = setTimeout(() => {
-      fsWait = false;
-    }, 200);
-    if (filename.endsWith('.md')) {
-      console.log('type:',e,filename);
-      try {
-        const {html,sku} = md2html(fs.readFileSync(path.join(env.watch_folder,filename), 'utf8'));
-        console.log({sku})
-        const page = fs.readFileSync(web_page,'utf8');
-        console.log('page.length:', page.length)
-        const $ = cheerio.load(page)
-        const section = $('section#tests-ya');
-        console.log(`found ${section.length} sections.`)
-        assert(section.length ==1)
-  //      replace_product({sku, section, html});
-        const v = $(section).find(`article[sku="${sku}"]`);
-        if (v.length <=0) {
-          console.log(`This product ${sku} is not found in blue-section.`)
-          return
-        }
-        //console.log(v)
-        v.empty().append(html);
+watcher
+.on('change', (path) => {
+  log(`File ${path} has been changed`)
+  update_index(path)
+})
 
-        const output = $.html()
-        fs.writeFileSync(web_page, output, 'utf8');
-      }
-      catch (err) {
-        console.log('ERROR:',err);
-      }      
-    }
+function update_index(filename) {
+  const {html,sku} = md2html(fs.readFileSync(filename, 'utf8'));
+  console.log({sku})
+  const page = fs.readFileSync(web_page,'utf8');
+  console.log('page.length:', page.length)
+  const $ = cheerio.load(page)
+  const section = $('section#tests-ya');
+  console.log(`found ${section.length} sections.`)
+  assert(section.length ==1)
+//      replace_product({sku, section, html});
+  const v = $(section).find(`article[sku="${sku}"]`);
+  if (v.length <=0) {
+    console.log(`This product ${sku} is not found in blue-section.`)
+    return
   }
+  //console.log(v)
+  v.empty().append(html);
+
+  const output = $.html()
+  fs.writeFileSync(web_page, output, 'utf8');
+}
+
+
+return;
+
+
+
+
+
+
+chokidar.watch(env.watch_folder, (e,filename) =>{
+  if (!filename) return;
+  if (fsWait) return;
+
+  fsWait = setTimeout(() => {
+      fsWait = false;
+  }, 200);
+
+  if (!filename.endsWith('.md')) return;
+
+  console.log('type:',e,filename);
+  try {
+    const {html,sku} = md2html(fs.readFileSync(path.join(env.watch_folder,filename), 'utf8'));
+    console.log({sku})
+    const page = fs.readFileSync(web_page,'utf8');
+    console.log('page.length:', page.length)
+    const $ = cheerio.load(page)
+    const section = $('section#tests-ya');
+    console.log(`found ${section.length} sections.`)
+    assert(section.length ==1)
+//      replace_product({sku, section, html});
+    const v = $(section).find(`article[sku="${sku}"]`);
+    if (v.length <=0) {
+      console.log(`This product ${sku} is not found in blue-section.`)
+      return
+    }
+    //console.log(v)
+    v.empty().append(html);
+
+    const output = $.html()
+    fs.writeFileSync(web_page, output, 'utf8');
+  }
+  catch (err) {
+    console.log('ERROR:',err);
+  }
+
+
 })
 
 return;
