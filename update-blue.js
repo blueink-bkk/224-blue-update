@@ -6,16 +6,19 @@
 */
 
 const fs = require('fs');
+const path = require('path')
 const assert = require('assert')
 const cheerio = require('cheerio');
 const find = require('find');
 const md2html = require('./md2html.js');
+const yaml = require('js-yaml');
 
+const env = yaml.safeLoad(fs.readFileSync('./.env.yaml', 'utf8'));
 
-const web_page = '/tmp/blueink/new-index.html';
+const web_page = env.web_page;
 
 let fsWait = false;
-fs.watch('/tmp/blue-products', (e,filename) =>{
+fs.watch(env.watch_folder, (e,filename) =>{
   if (filename) {
     if (fsWait) return;
     fsWait = setTimeout(() => {
@@ -23,7 +26,7 @@ fs.watch('/tmp/blue-products', (e,filename) =>{
     }, 200);
     console.log('type:',e,filename)
     try {
-      const {html,sku} = md2html(fs.readFileSync('/tmp/blue-products/'+filename, 'utf8'));
+      const {html,sku} = md2html(fs.readFileSync(path.join(env.watch_folder,filename), 'utf8'));
       console.log({sku})
       const page = fs.readFileSync(web_page,'utf8');
       console.log('page.length:', page.length)
