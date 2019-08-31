@@ -13,40 +13,31 @@ const find = require('find');
 const md2html = require('./md2html.js');
 const yaml = require('js-yaml');
 const chokidar = require('chokidar');
-const yargs = require('yargs')
-.alias('v','verbose').count('verbose')
-.alias('i','instance_name')
-.argv;
-
 
 const env = yaml.safeLoad(fs.readFileSync('./.env.yaml', 'utf8'));
 
-const web_page = yargs.web_page || env.web_page;
-const watch_folder = path.join(path.resolve(yargs.watch_folder || web_page.replace(/\.html/,'')),"*.md");
-console.log(`blue-update watching <${watch_folder}>`)
-
+const web_page = env.web_page;
 const log = console.log.bind(console);
-// GIVE FULL PATH...
+const watcher = chokidar.watch(path.join(env.watch_folder, '*.md'), {
+})
 
-//const watcher = chokidar.watch('/home/dkz/tmp/224-co.th/www/new-index/*.md', {});
-const watcher = chokidar.watch(path.resolve(watch_folder), {});
+watcher
+.on('change', (path) => {
+  log(`File ${path} has been changed`)
+  update_index(path)
+})
 
 
 var watchedPaths = watcher.getWatched();
 console.log(`watched:`,watchedPaths)
 
-/*
-watcher
-.on('change', (path) => {
-  log(`File ${path} has been changed`)
-//  update_index(path)
-}) */
-
-
+<<<<<<< HEAD:blue-update.js
 watcher.on('change', (path, stats) => {
   if (stats) console.log(`File ${path} changed size to ${stats.size}`);
   update_web_page(path)
 });
+=======
+>>>>>>> 4d6907c1254534589e08110dd2a9d4ea0b3d8b61:update-blue.js
 
 
 function update_web_page(filename) {
@@ -70,3 +61,7 @@ function update_web_page(filename) {
   const output = $.html()
   fs.writeFileSync(web_page, output, 'utf8');
 }
+
+
+return;
+
