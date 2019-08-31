@@ -45,10 +45,11 @@ watcher
 
 watcher.on('change', (path, stats) => {
   if (stats) console.log(`File ${path} changed size to ${stats.size}`);
+  update_web_page(path)
 });
 
 
-function update_index(filename) {
+function update_web_page(filename) {
   const {html,sku} = md2html(fs.readFileSync(filename, 'utf8'));
   console.log({sku})
   const page = fs.readFileSync(web_page,'utf8');
