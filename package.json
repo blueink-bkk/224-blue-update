@@ -13,7 +13,9 @@
     "cheerio": "^1.0.0-rc.3",
     "chokidar": "^3.0.2",
     "find": "^0.3.0",
+    "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",
+    "klaw-sync": "^6.0.0",
     "marked": "^0.7.0",
     "node-git-server": "^0.6.0",
     "yargs": "^14.0.0"
