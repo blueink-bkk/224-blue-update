@@ -6,8 +6,7 @@
 const fs = require('fs-extra');
 const path = require('path')
 const walk = require('klaw-sync')
-const input_folder = '../224-co.th';
-const output_folder = './html'
+const input_folder = '/www/ultimheat2.co.th';
 
 function rebuild(lang) {
   // get code to include.
