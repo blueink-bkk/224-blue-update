@@ -37,6 +37,7 @@ function rebuild(lang) {
     if (file.path.endsWith('.php')) {
       console.log('==================\n'+file.path+'\n=====================')
       const html = fs.readFileSync(file.path,'utf8')
+      .replace(/^[^]*<!DOCTYPE/mi,'<!DOCTYPE')
       .replace(/<\?= base_url; \?>/g,'../') // must be first
       .replace(/<\?php include\('head.php'\); \?>/g, head)
       .replace(/<\?php include\('header.php'\); \?>/g, header)
@@ -54,3 +55,20 @@ function rebuild(lang) {
 
 rebuild('en');
 rebuild('th');
+
+rebuild_index();
+
+
+
+function rebuild_index() {
+  const html = fs.readFileSync(path.join(input_folder,'index.php'),'utf8')
+  .replace(/<\?= base_url; \?>/g,'./') // must be first
+//  .replace(/<\?php include\('head.php'\); \?>/g, head)
+//  .replace(/<\?php include\('header.php'\); \?>/g, header)
+//  .replace(/<\?php include\('footer.php'\); \?>/g, footer)
+//  .replace(/<\?php include\('sidebar.php'\); \?>/g, sidebar)
+  .replace(/<\?php define[^>]*$>/g,'');
+  //console.log(html)
+
+  fs.outputFileSync(path.join(input_folder,'index.html'),html,'utf8');
+}

@@ -1,12 +1,22 @@
 #!/usr/bin/env node
 
+/*
+
+      fix legacy products.
+
+
+*/
+
+
+
 const fs = require("fs");
 const path = require('path')
 const assert = require('assert');
 const cheerio = require('cheerio');
 //const md2html = require('./md2html.js')
 
-const fn = '/home/dkz/tmp/new-products.html';
+//const fn = '/home/dkz/tmp/new-products.html';
+const fn = '/www/ultimheat3.co.th/en/new-products.html';
 
 if (!fs.existsSync(fn)) {
   console.log(`html not found: <${fn}>`)
