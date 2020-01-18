@@ -105,7 +105,7 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - for more complex situations, a specialized renderer (javascript) might be required.
 - parameters required for the specialized renderer must be set in MD metadata. (see below)
 - in some cases, markdown-code of MD file could be empty. The renderer then has to build the html code from metadata only. 
-- specialized renderer produce html code in 2 steps:
+- a specialized renderer produces html code in 2 steps:
   - (1) specialized markdown renderer using renderer hooks produces html code.
   - (2) metadata and html from (1) are injected in a javascript template.
 
