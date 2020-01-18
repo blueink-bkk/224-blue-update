@@ -29,17 +29,19 @@ Ceramic cable outlet for ovens and kilns and furnaces, allows
 to pass electrical conductors through a metal wall in areas where 
 the temperature is too high for plastics. The temperature resistance 
 is given by the material of the nut: 230°C with nickel-plated brass nut, 
-500°C with stainless steel nut.  
+500°C with stainlessenroll-new-products 
 ```
 
 ## Enrolling new products
+- use javascript `./224-blue-update/enroll-new-products.js`
 - to be _published_ products in `ya-store` must be referenced in the `new-products` directory.
 - `enroll-new-products` is in charge of finding products is `ya-store` not yet referenced.
 - for each pdf we create a hard link in `./en/pdf`
 - for each jpg we create a hard link in `./new-images`
 - for each md we create a hard link in `./en`
 
-## rebuild `new-products.html`
+## Rebuild html page : `new-products.html`
+- use javascript `./224-blue-update/add-products.js`
 - _cheerio_ locate `section#new-products` and empty the html content.
 - then, `new-products` directory is scanned in reverse order (enrolled products)
 - each product has an ID (sequential number) and a sku.
