@@ -60,3 +60,8 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - Each editable element (`js-e3article`) is stored in a _markdown_ file with metadata.
 - Both markdown code (MD-content), and metadata are editable.
 - when `metadata.format` is `raw-html` the MD-content must be pure html code, and will used without transformation.
+
+
+## How to give `e3article` permission ?
+
+
