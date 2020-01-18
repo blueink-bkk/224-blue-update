@@ -52,8 +52,8 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 
 
 ## How to make an html element _editable_ ?
-- **must** have an ID.
-- **must** be class `js-e3article`
+- **MUST** have an ID.
+- **MUST** be class `js-e3article`
 - each element `js-e3article` will be highlighted on a mouse _hover_.
 - a double-click on an highlighted element will start the editing process (`https://editora.us/edit-article`) web-application.
 - A page visitor must have some privileges to see the highlight and be able to edit an element. (see below)
