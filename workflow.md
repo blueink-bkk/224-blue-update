@@ -62,6 +62,6 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - when `metadata.format` is `raw-html` the MD-content must be pure html code, and will used without transformation.
 
 
-## How to give `e3article` permission ?
+## How to give _edit_ permission ? (webmaster)
 
 
