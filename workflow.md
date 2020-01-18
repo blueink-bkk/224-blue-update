@@ -57,9 +57,10 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - tagName is abitrary : div, article, section.
 - each element `js-e3article` is called _editable content_ and will be highlighted on a mouse _hover_.
 - a double-click on an highlighted element will start the editing process (`https://editora.us/edit-article`) web-application.
-- A page visitor must have some privileges to see the highlight and be able to edit an element. (see below)
-- Each editable element (`js-e3article`) is stored in a _markdown_ file with metadata.
-- Both markdown code (MD-content), and metadata are editable.
+- a page visitor must have some privileges to see the highlight and be able to edit an element. (see below)
+- each editable element (`js-e3article`) is stored in a _markdown_ file with metadata.
+- metadata are in YAML format.
+- both markdown code (MD-content), and metadata (YAML) are editable.
 - when `metadata.format` is `raw-html` the MD-content must be pure html code, and will used without transformation.
 
 ##### Example:
@@ -104,6 +105,9 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - for more complex situations, a specialized renderer (javascript) might be required.
 - parameters required for the specialized renderer must be set in MD metadata. (see below)
 - in some cases, markdown-code of MD file could be empty. The renderer then has to build the html code from metadata only. 
+- specialized renderer produce html code in 2 steps:
+  - (1) specialized markdown renderer using renderer hooks produces html code.
+  - (2) metadata and html from (1) are injected in a javascript template.
 
 ##### Ex : metadata for specialized renderer
 ```
