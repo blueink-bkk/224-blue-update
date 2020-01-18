@@ -50,3 +50,14 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - The renderer is a md2html converter (_markdown_ to _html_) specialized for the given format.
 - the only renderer so far is `divya-v1`.
 
+
+## How to make an html element _editable_ ?
+- (1) must have an ID.
+- (2) must be class `js-e3article`
+
+- each element `js-e3article` will be highlighted on a mouse _hover_.
+- a double-click on an highlighted element will start the editing process (`https://editora.us/edit-article`) web-application.
+- A page visitor must have some privileges to see the highlight and be able to edit an element. (see below)
+- Each editable element (`js-e3article`) is stored in a _markdown_ file with metadata.
+- Both markdown code (MD-content), and metadata are editable.
+- when `metadata.format` is `raw-html` the MD-content must be pure html code, and will used without transformation.
