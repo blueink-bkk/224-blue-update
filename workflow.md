@@ -54,14 +54,64 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 ## How to make an html element _editable_ ?
 - **MUST** have an ID.
 - **MUST** be class `js-e3article`
-- each element `js-e3article` will be highlighted on a mouse _hover_.
+- tagName is abitrary : div, article, section.
+- each element `js-e3article` is called _editable content_ and will be highlighted on a mouse _hover_.
 - a double-click on an highlighted element will start the editing process (`https://editora.us/edit-article`) web-application.
 - A page visitor must have some privileges to see the highlight and be able to edit an element. (see below)
 - Each editable element (`js-e3article`) is stored in a _markdown_ file with metadata.
 - Both markdown code (MD-content), and metadata are editable.
 - when `metadata.format` is `raw-html` the MD-content must be pure html code, and will used without transformation.
 
+##### Example:
+```
+<html>
+  <head>...</head>
+  <body>
+  ...
+     <article id="1234X" class="js-e3article">...</article>
+     <div id="1235" class="js-e3article" data-sku="Y2K20">...</div>     
+  ...
+  </body>
+</html>
+```
+
+
 
 ## How to give _edit_ permission ? (webmaster)
+- add query parameter to any URL - ex: `?p=XXXXX` with code provided by website admin.
+- To add permanent privilege, visit `https://ultimheat.co.th/allow-double-click?p=XXXXX`
 
+
+## Where are the editable-elements stored ?
+- once edited, an editable-element is stored in MD format, _next_ to the html page (_see below_)
+- 
+
+##### Ex : file name convention-1 for md files.
+```
+./en/new-produts.html
+./en/new-products.html^2029-Y2k3.MD
+```
+##### Ex : file name convention-2 for md files.
+```
+./en/new-produts.html
+./en/new-products
+./en/new-products/2029-Y2k3.MD
+```
+
+## Specialized renderers.
+- in most of the cases, a standard renderer (_markdown_ to _html_) is used.
+- if specific styling is required, it's always possible to add some css code. (see below)
+- for more complex situations, a specialized renderer (javascript) might be required.
+- parameters required for the specialized renderer must be set in MD metadata. (see below)
+- in some cases, markdown-code of MD file could be empty. The renderer then has to build the html code from metadata only. 
+
+##### Ex : metadata for specialized renderer
+```
+---
+color1: rgb(10,30,67)
+width1: 300px;
+price: $23.00
+sku: Y2K20
+---
+```
 
