@@ -1,4 +1,4 @@
-# new blueink website
+# blueink new website : `ultimheat.co.th`
 
 ## Gateway to import new products
 - folder `ya-store` contains the new products
@@ -33,8 +33,18 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 ```
 
 ## Enrolling new products
-- to be _published_ products in `ya-store` must be referenced in a page directory.
+- to be _published_ products in `ya-store` must be referenced in the `new-products` directory.
 - `enroll-new-products` is in charge of finding products is `ya-store` not yet referenced.
 - for each pdf we create a hard link in `./en/pdf`
 - for each jpg we create a hard link in `./new-images`
 - for each md we create a hard link in `./en`
+
+## rebuild `new-products.html`
+- _cheerio_ locate `section#new-products` and empty the html content.
+- then, `new-products` directory is scanned in reverse order (enrolled products)
+- each product has an ID (sequential number) and a sku.
+- for each enrolled product, we add a `article#ID` html element with content found in _markdown_ (`.md`) file.
+- if format specified in metadata is not `raw-html`, a _renderer_ is applied to `.md` file.
+- The renderer is a md2html converter (_markdown_ to _html_) specialized for the given format.
+- the only renderer so for is `divya-v1`.
+
