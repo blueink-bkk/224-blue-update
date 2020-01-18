@@ -46,5 +46,5 @@ is given by the material of the nut: 230°C with nickel-plated brass nut,
 - for each enrolled product, we add a `article#ID` html element with content found in _markdown_ (`.md`) file.
 - if format specified in metadata is not `raw-html`, a _renderer_ is applied to `.md` file.
 - The renderer is a md2html converter (_markdown_ to _html_) specialized for the given format.
-- the only renderer so for is `divya-v1`.
+- the only renderer so far is `divya-v1`.
 
