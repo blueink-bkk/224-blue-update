@@ -4,7 +4,9 @@
 - folder `ya-store` contains the new products
 - each new product is made of 3 files: pdf, jpeg, md into a subfolder.
 - see below for examples.
+- each folder has a unique numeric prefix. (here 1282^)
 
+##### folder new-product
 ```
 1282^Cat32-Ultimheat-EN-P63-BZ-20200116
 -- Cat32-Ultimheat-EN-P63-BZ-20200116.jpg
@@ -29,3 +31,10 @@ the temperature is too high for plastics. The temperature resistance
 is given by the material of the nut: 230°C with nickel-plated brass nut, 
 500°C with stainless steel nut.  
 ```
+
+## Enrolling new products
+- to be _published_ products in `ya-store` must be referenced in a page directory.
+- `enroll-new-products` is in charge of finding products is `ya-store` not yet referenced.
+- for each pdf we create a hard link in `./en/pdf`
+- for each jpg we create a hard link in `./new-images`
+- for each md we create a hard link in `./en`
