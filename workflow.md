@@ -144,6 +144,11 @@ $ ~/224-blue-update/enroll-new-products.js
 ```
 
 
-#### (4) Rebuild `new-produits`
+#### (4) Rebuild `new-produits` section
 - using `cheerio`, locate, empty and rebuild `section#new-products row`
-- 
+- scan existing articles in section, **create a MD file** if that article is not found as `new-products.html#xxx.md`
+```
+$ ~/224-blue-update/add-products.js
+```
+
+
