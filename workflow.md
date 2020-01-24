@@ -134,9 +134,13 @@ $ git pull
 ```
 $ ~/224-blue-update/php2html.js
 ```
-#### (3) Create links to `ya-data`
+#### (3) Create links into `ya-store`
+- create 3 hard links for each folder in `ya-store`
+- hard link to pdf into ./en/pdf
+- hard link to jpg into ./new-images
+- hard link to y2k3.md into ./en/new-products.html#1234-y2k3.md
 ```
-$ ~/224-blue-update/enroll-
+$ ~/224-blue-update/enroll-new-products.js
 ```
 
 
