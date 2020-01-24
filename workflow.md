@@ -119,3 +119,27 @@ sku: Y2K20
 ---
 ```
 
+## Workflow
+
+#### (1) Update php files
+- repository: `https://github.com/kavendraespl/224-co.th.git`
+```
+$ git pull
+```
+
+#### (2) Rebuild HTML file
+- repository: `https://github.com/blueink-bkk/224-blue-update.git`
+- each PHP file is converted into HTML by interpreting `<?php include('***.php'); ?>`
+- 
+```
+$ ~/224-blue-update/php2html.js
+```
+#### (3) Create links to `ya-data`
+```
+$ ~/224-blue-update/enroll-
+```
+
+
+#### (4) Rebuild `new-produits`
+- using `cheerio`, locate, empty and rebuild `section#new-products row`
+- 
