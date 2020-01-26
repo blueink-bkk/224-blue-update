@@ -119,3 +119,36 @@ sku: Y2K20
 ---
 ```
 
+## Workflow
+
+#### (1) Update php files
+- repository: `https://github.com/kavendraespl/224-co.th.git`
+```
+$ git pull
+```
+
+#### (2) Rebuild HTML file
+- repository: `https://github.com/blueink-bkk/224-blue-update.git`
+- each PHP file is converted into HTML by interpreting `<?php include('***.php'); ?>`
+- 
+```
+$ ~/224-blue-update/php2html.js
+```
+#### (3) Create links into `ya-store`
+- create 3 hard links for each folder in `ya-store`
+- hard link to pdf into ./en/pdf
+- hard link to jpg into ./new-images
+- hard link to y2k3.md into ./en/new-products.html#1234-y2k3.md
+```
+$ ~/224-blue-update/enroll-new-products.js
+```
+
+
+#### (4) Rebuild `new-produits` section
+- using `cheerio`, locate, empty and rebuild `section#new-products row`
+- scan existing articles in section, **create a MD file** if that article is not found as `new-products.html#xxx.md`
+```
+$ ~/224-blue-update/add-products.js
+```
+
+
