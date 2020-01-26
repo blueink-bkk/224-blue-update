@@ -17,7 +17,7 @@ const cheerio = require('cheerio');
 const md2html = require('./md2html-simple.js')
 
 const verbose =0;
-const en_fpath = '/www/ultimheat3.co.th/en'
+const en_fpath = '/www/ultimheat4.co.th/en'
 //const regex = /^(\d+)\^.*/; // ya-format
 //en/new-products.html';
 
@@ -31,7 +31,7 @@ const h =[]; // /en/new-products.html~1200.md
 
 const v2 = fs.readdirSync(en_fpath)
 for (let fn of v2) {
-  const retv = fn.match(/^new-products.html\^(\d+)\.md$/)
+  const retv = fn.match(/^new-products.html\#(\d+)\.md$/)
   if (!retv) {
 //    console.log(`Invalid file syntax: <${fn}>`)
     continue;
@@ -43,6 +43,10 @@ for (let fn of v2) {
 }
 
 /*
+
+    PHASE 2 :
+
+
     here we have list of products in MD files.
     maybe some legacy products not there... <1200
 
@@ -63,7 +67,7 @@ const $ = cheerio.load(page_html)
 
 const selector = `section#new-products div.row`
 const v = $('body').find(selector);
-console.log(`found ${v.length}`)
+console.log(`found ${v.length} new-products in actual HTML page.`)
 // Get inner-html
 //  const html = v.html();
 //    console.log(`data():`,v.data())
@@ -77,26 +81,33 @@ const listp = v.children();
 listp.each((i,e)=>{
 //  console.log('--------------')
   const article = $(e).find('article');
-  const ai = $(article).attr('id');
+  let ai = $(article).attr('id');
   const sku = $(article).data().sku;
-  console.log(`article id:${$(article).attr('id')} sku:${sku}`)
+  const span = $(e).find('span.number-btn');
+  if (!ai) {
+    // this for first processing on files coming from eglogics
+    // those files not have id only number-btn
+    ai = span.text();
+  } else {
+    console.log(`article id:${$(article).attr('id')} sku:${sku}`)
+    span.text(ai) // realign.
+  }
+
   /*
       fix the ai
   */
-  const span = $(e).find('span.number-btn');
-  // console.log(`span.text:`,span.text())
-  span.text(ai)
   if (!h[ai]) {
+    // CREATE A RAW HTML MD
     console.log(`Missing product ${ai}.MD`)
     // extract and create MD
     console.log(article.html())
-    fs.writeFileSync(path.join(en_fpath,`new-products.html^${ai}.md`),`---
+    fs.writeFileSync(path.join(en_fpath,`new-products.html#${ai}.md`),`---
 article_id: ${ai}
 sku: ${sku}
 format: raw-html
 ---
 ` + article.html().replace(/^\s*/gm,' '),'utf8');
-  h[ai] = path.join(en_fpath,`new-products.html^${ai}.md`);
+  h[ai] = path.join(en_fpath,`new-products.html#${ai}.md`);
 } else {
   // do nothing.
 }
@@ -117,7 +128,7 @@ const revlist = Object.keys(h).reverse();
 */
 
 revlist.forEach(ai =>{
-  const {data, html} = read_md_file(path.join(en_fpath,`new-products.html^${ai}.md`));
+  const {data, html} = read_md_file(path.join(en_fpath,`new-products.html#${ai}.md`));
   if (data.format == 'raw-html') {
 //    console.log({html})
     v.append(`<div class="col-lg-4 col-md-6">

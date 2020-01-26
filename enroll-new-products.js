@@ -13,13 +13,13 @@
 const fs = require("fs");
 const path = require('path')
 const assert = require('assert');
-const cheerio = require('cheerio');
+//const cheerio = require('cheerio');
 //const md2html = require('./md2html.js')
 
 const verbose =0;
-const ya_store = '/www/ultimheat3.co.th/ya-store';
-const en_fpath = '/www/ultimheat3.co.th/en'
-const new_images = '/www/ultimheat3.co.th/new-images'
+const ya_store = '/www/ultimheat4.co.th/ya-store';
+const en_fpath = '/www/ultimheat4.co.th/en'
+const new_images = '/www/ultimheat4.co.th/new-images'
 const regex = /^(\d+)\^.*/; // ya-format
 //en/new-products.html';
 
@@ -60,7 +60,7 @@ for (let fpath of v) {
 
 const v2 = fs.readdirSync(en_fpath)
 for (let fn of v2) {
-  const retv = fn.match(/^new-products.html\^(\d+)\.md$/)
+  const retv = fn.match(/^new-products.html#(\d+)\.md$/)
   if (!retv) {
 //    console.log(`Invalid file syntax: <${fn}>`)
     continue;
@@ -144,7 +144,7 @@ for (const ai of Object.keys(h)) {
         console.log(`code:${err.code} dest:<${err.dest}>`)
       }
     } else if (fn.endsWith('.md')) {
-      const dest = path.join(en_fpath, `new-products.html^${ai}.md`);
+      const dest = path.join(en_fpath, `new-products.html#${ai}.md`);
       console.log({dest})
       try {
         fs.unlinkSync(dest);
