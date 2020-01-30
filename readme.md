@@ -17,6 +17,10 @@
 3. add the jpeg
 4. create a md file (ex, follow)
 ```
+1282^Cat32-Ultimheat-EN-P63-BZ-20200116
+-- Cat32-Ultimheat-EN-P63-BZ-20200116.jpg
+-- Cat32-Ultimheat-EN-P63-BZ-20200116.md
+-- Cat32-Ultimheat-EN-P63-BZ-20200116.pdf
 ```
 5. using **fileZilla** upload the folder on Caltek.net
 6. website will be updated in a few minutes.
