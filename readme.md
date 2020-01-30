@@ -29,8 +29,16 @@
 
 1. follow procedure **LiveUpdate*
 2. edit the metadata
-3. insert delete instruction (see ex. below)
+3. insert delete instruction `deleted: true` (see ex. below)
 4. save document (control-S)
 
 ```
+---
+article_id:  1282-BZ
+img:  Cat32-Ultimheat-EN-P63-BZ-20200116.jpg
+pdf:  Cat32-Ultimheat-EN-P63-BZ-20200116.pdf
+format:  diva-v1
+sku:  Type BZ
+deleted: true
+---
 ```
