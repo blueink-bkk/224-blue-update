@@ -154,3 +154,10 @@ $ ~/224-blue-update/add-products.js
 #### New Repository
 
 ![pull-push](IMG_20200130_100514-2.jpg)
+
+```
+$ git pull
+$ git remote add abatros-blueink https://github.com/blueink-bkk/224-co.th.git
+$ git push abatros-blueink
+```
+
