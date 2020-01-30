@@ -27,7 +27,7 @@
 
 ## How to remove a product
 
-1. follow procedure **LiveUpdate*
+1. follow procedure **LiveUpdate**
 2. edit the metadata
 3. insert delete instruction `deleted: true` (see ex. below)
 4. save document (control-S)
