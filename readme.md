@@ -8,4 +8,5 @@
 4. double-click : codeMirror editor opens in a new tab
 5. edit the data
 6. control-S to save your modifs
-7. go back to (2) 
+7. go back to (2) and verify your changes.
+
