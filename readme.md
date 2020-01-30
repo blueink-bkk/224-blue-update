@@ -15,7 +15,7 @@
 1. create a folder
 2. add the pdf
 3. add the jpeg
-4. create a md file (ex, follow)
+4. create a md file (see ex. below)
 ```
 1282^Cat32-Ultimheat-EN-P63-BZ-20200116
 -- Cat32-Ultimheat-EN-P63-BZ-20200116.jpg
