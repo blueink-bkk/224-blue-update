@@ -24,3 +24,13 @@
 ```
 5. using **fileZilla** upload the folder on Caltek.net
 6. website will be updated in a few minutes.
+
+## How to remove a product
+
+1. follow procedure **LiveUpdate*
+2. edit the metadata
+3. insert delete instruction (see ex. below)
+4. save document (control-S)
+
+```
+```
