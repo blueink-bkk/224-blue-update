@@ -6,7 +6,7 @@
 2. visit page `https://ultimheat.co.th/en/new-products.html` or (th)
 3. position cursor on notice to update
 4. double-click : codeMirror editor opens in a new tab
-5. edit the data
+5. edit metadata and/or markdown code
 6. control-S to save your modifs
 7. go back to (2) and verify your changes.
 
