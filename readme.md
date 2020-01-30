@@ -10,3 +10,13 @@
 6. control-S to save your modifs
 7. go back to (2) and verify your changes.
 
+## How to add a new product
+
+1. create a folder
+2. add the pdf
+3. add the jpeg
+4. create a md file (ex, follow)
+```
+```
+5. using **fileZilla** upload the folder on Caltek.net
+6. website will be updated in a few minutes.
