@@ -6,17 +6,20 @@
 const fs = require('fs-extra');
 const path = require('path')
 const walk = require('klaw-sync')
-const input_folder = '/www/ultimheat4.co.th';
+const input_folder = '/www/ultimheat.co.th';
 
 function rebuild(lang) {
   // get code to include.
   const head = fs.readFileSync(path.join(input_folder,lang,'head.php'),'utf8')
   .replace(/<\?= base_url; \?>/g,'../') // must be first
-  .replace(/<\?php.*\?>/s,'') + `
+  .replace(/<\?php.*\?>/s,'')
+
+  /*
+  + `
 <meta name="e3:revision" content="1.0">
 <script src="/dkz-double-click.js"></script>
 <link rel="stylesheet" href="/dkz.css">
-`;
+`;*/
 
   console.log(head)
 
@@ -40,7 +43,7 @@ function rebuild(lang) {
 
   walk(path.join(input_folder,lang)).forEach(file =>{
     if (file.path.endsWith('.php')) {
-      console.log('==================\n'+file.path+'\n=====================')
+      console.log(`processing file: <${file.path}>`)
       const html = fs.readFileSync(file.path,'utf8')
 //      .replace(/^[^]*<!DOCTYPE/mi,'<!DOCTYPE')
       .replace(/<\?= base_url; \?>/g,'../') // must be first

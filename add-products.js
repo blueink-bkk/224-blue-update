@@ -17,7 +17,7 @@ const cheerio = require('cheerio');
 const md2html = require('./md2html-simple.js')
 
 const verbose =0;
-const en_fpath = '/www/ultimheat4.co.th/en'
+const en_fpath = '/www/ultimheat.co.th/en'
 //const regex = /^(\d+)\^.*/; // ya-format
 //en/new-products.html';
 

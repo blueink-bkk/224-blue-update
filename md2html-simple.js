@@ -4,7 +4,17 @@ const yaml = require('js-yaml');
 const assert = require('assert')
 
 
+function fix_yaml(data) { // NO.
+  const v = data.split(/\-\-\-/g);
+  assert(!v[0])
+  assert(v.length == 3)
+  v[1] = v[1].replace(/^([^:]*):\s*/gm,'$1<<>>').replace(/:/g,'~!~').replace(/<<>>/g,': ')
+  console.log(v.join('---'))
+  return v.join('---')
+}
+
 function md2html(data) {
+  data = fix_yaml(data);
   const v = data.trim().split(/\-\-\-/g); //match(yamlBlockPattern);
   assert(!v[0])
   assert(v.length == 3)

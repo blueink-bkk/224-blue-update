@@ -17,9 +17,9 @@ const assert = require('assert');
 //const md2html = require('./md2html.js')
 
 const verbose =0;
-const ya_store = '/www/ultimheat4.co.th/ya-store';
-const en_fpath = '/www/ultimheat4.co.th/en'
-const new_images = '/www/ultimheat4.co.th/new-images'
+const ya_store = '/www/ultimheat.co.th/ya-store';
+const en_fpath = '/www/ultimheat.co.th/en'
+const new_images = '/www/ultimheat.co.th/new-images'
 const regex = /^(\d+)\^.*/; // ya-format
 //en/new-products.html';
 
