@@ -1,83 +1,108 @@
-#!/usr/bin/env node
+const fs = require('fs')
+const cheerio = require('cheerio');
 
-// twillio : 1 201 367 1972
+function strip(fpath) {
 
-
-const fs = require('fs-extra');
-const path = require('path')
-const walk = require('klaw-sync')
-const input_folder = '/www/ultimheat.co.th';
-
-function rebuild(lang) {
-  // get code to include.
-  const head = fs.readFileSync(path.join(input_folder,lang,'head.php'),'utf8')
-  .replace(/<\?= base_url; \?>/g,'../') // must be first
-  .replace(/<\?php.*\?>/s,'')
-
-  /*
-  + `
-<meta name="e3:revision" content="1.0">
-<script src="/dkz-double-click.js"></script>
-<link rel="stylesheet" href="/dkz.css">
-`;*/
-
-  console.log(head)
-
-  const header = fs.readFileSync(path.join(input_folder,lang,'header.php'),'utf8')
-  .replace(/<\?= base_url; \?>/g,'../') // must be first
-//  .replace(/<\?php.*\?>/s,'')
-  console.log(header)
-
-  const footer = fs.readFileSync(path.join(input_folder,lang,'footer.php'),'utf8')
-  .replace(/<\?= base_url; \?>/g,'../') // must be first
-//  .replace(/<\?php.*\?>/s,'')
-  console.log(footer)
-
-  const sidebar = fs.readFileSync(path.join(input_folder,lang,'sidebar.php'),'utf8')
-  .replace(/<\?= base_url; \?>/g,'../') // must be first
-//  .replace(/<\?php.*\?>/s,'')
-  console.log(sidebar)
-
-
-  // each php file from either en or th folders.
-
-  walk(path.join(input_folder,lang)).forEach(file =>{
-    if (file.path.endsWith('.php')) {
-      console.log(`processing file: <${file.path}>`)
-      const html = fs.readFileSync(file.path,'utf8')
+  const html = fs.readFileSync(fpath,'utf8')
 //      .replace(/^[^]*<!DOCTYPE/mi,'<!DOCTYPE')
-      .replace(/<\?= base_url; \?>/g,'../') // must be first
-      .replace(/<\?php include\('head.php'\); \?>/g, head)
-      .replace(/<\?php include\('header.php'\); \?>/g, header)
-      .replace(/<\?php include\('footer.php'\); \?>/g, footer)
-      .replace(/<\?php include\('sidebar.php'\); \?>/g, sidebar)
+  .replace(/<\?= base_url; \?>/g, '') // must be first
+  .replace(/<\?php include\('head.php'\); \?>/g, '')
+  .replace(/<\?php include\('header.php'\); \?>/g, '')
+  .replace(/<\?php include\('footer.php'\); \?>/g, '')
+  .replace(/<\?php include\('sidebar.php'\); \?>/g, '')
+  return html;
+}
 
-      //console.log(html)
+function scan(fpath, {
+  every_article,
+  every_img,
+  every_href}) {
+  const html = strip(fpath);
+//  console.log(html)
+  const $ = cheerio.load(html)
+  const selector = `section#new-products div.row`
+  const v = $('body').find(selector);
+  console.log(`found ${v.length} new-products in actual HTML page.`)
+//  console.log(v)
+  const listp = v.children();
+//  console.log(`@25: `, listp)
 
-      fs.outputFileSync(file.path.replace(/\.php$/,'.html'),html);
-    }
+  listp.each((i,e)=>{
+    const article = $(e).find('article');
+    let ai = $(article).attr('id');
+    const sku = $(article).data().sku;
+    const span = $(e).find('span.number-btn');
+    const xid = span.text()
+//    console.log(`-- ai:${ai} sku:${sku} xid:${xid}`)
+
+    // BUILD THE MD
+
+    const yaml = `---
+xid: ${xid}
+article_id: ${ai}
+sku: ${sku}
+format: raw-html
+---
+`
+    const html = article.html().replace(/^\s*/gm,' ');
+
+//    console.log(md)
+
+  every_article({ai,xid,yaml,html}) // create folder.
+
+  const list_img = $(article).find('img').each(function() {
+    every_img({xid, fn:$(this).attr('src').trim()});
+  })
+
+  $(article).find('a').each(function() {
+    //console.log(`href:`,$(this))
+    every_href({xid, fn:$(this).attr('href').trim()});
   })
 
 
 
-} // rebuild.
+  })
 
-rebuild('en');
-rebuild('th');
+return;
+  listp.each((i,e)=>{
+    console.log('--------------')
+    const article = $(e).find('article');
+    let ai = $(article).attr('id');
+    const sku = $(article).data().sku;
+    const span = $(e).find('span.number-btn');
+    if (!ai) {
+      // this for first processing on files coming from eglogics
+      // those files not have id only number-btn
+      ai = span.text();
+    } else {
+      console.log(`article id:${$(article).attr('id')} sku:${sku}`)
+      span.text(ai) // realign.
+    }
 
-rebuild_index();
+    /*
+        fix the ai
+    */
 
+    if (false){
+    if (!h[ai]) {
+      // CREATE A RAW HTML MD
+      console.log(`Missing product ${ai}.MD`)
+      // extract and create MD
+      console.log(article.html())
+      fs.writeFileSync(path.join(en_fpath,`new-products.html#${ai}.md`),`---
+  article_id: ${ai}
+  sku: ${sku}
+  format: raw-html
+  ---
+  ` + article.html().replace(/^\s*/gm,' '),'utf8');
+    h[ai] = path.join(en_fpath,`new-products.html#${ai}.md`);
+  } else {
+    // do nothing.
+  } }
+})
 
+}
 
-function rebuild_index() {
-  const html = fs.readFileSync(path.join(input_folder,'index.php'),'utf8')
-  .replace(/<\?= base_url; \?>/g,'./') // must be first
-//  .replace(/<\?php include\('head.php'\); \?>/g, head)
-//  .replace(/<\?php include\('header.php'\); \?>/g, header)
-//  .replace(/<\?php include\('footer.php'\); \?>/g, footer)
-//  .replace(/<\?php include\('sidebar.php'\); \?>/g, sidebar)
-  .replace(/<\?php define[^>]*$>/g,'');
-  //console.log(html)
-
-  fs.outputFileSync(path.join(input_folder,'index.html'),html,'utf8');
+module.exports = {
+  scan
 }

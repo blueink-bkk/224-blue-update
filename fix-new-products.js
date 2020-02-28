@@ -13,29 +13,56 @@ const fs = require("fs");
 const path = require('path')
 const assert = require('assert');
 const cheerio = require('cheerio');
-//const md2html = require('./md2html.js')
 
-//const fn = '/home/dkz/tmp/new-products.html';
-const fn = '/www/ultimheat3.co.th/en/new-products.html';
+const argv = require('yargs')
+  .alias('v','verbose').count('verbose')
+  .alias('c','js-class')
+  .alias('i','input')
+  .alias('n','dry-run')
+  .options({
+    'dry-run':  {type:'boolean', default:false},
+    'force': {type:'boolean', default:false},
+  }).argv;
 
-if (!fs.existsSync(fn)) {
-  console.log(`html not found: <${fn}>`)
+const {verbose, 'input':fpath, 'dry-run':dry_run, 'js-class':js_class = 'js-e3article'} = argv;
+
+if (!fpath) {
+  console.log(`Missing --input (-i)`)
   return;
 }
 
-const page_html = fs.readFileSync(fn,'utf8');
-console.log('page.length:', page_html.length)
-const $ = cheerio.load(page_html)
+if (!fs.existsSync(fpath)) {
+  console.log(`html file-not-found <${fpath}>`)
+  return;
+}
+
+if (dry_run) {
+  console.log(`DRY-RUN`)
+//  console.log(`-stop`); return;
+}
+
+
+const html = fs.readFileSync(fpath,'utf8');
+console.log('page.length:', html.length)
+const $ = cheerio.load(html)
 
 const revision_id = get_meta($,'e3:revision');
-if (true || !revision_id) {
+if (!revision_id) {
   console.log(`e3:revision:`,revision_id)
   upgrade_new_products($);
-  if (true) {
-    fs.writeFileSync(fn, $.html(), 'utf8')
+  if (!dry_run) {
+    fs.writeFileSync(fpath, $.html(), 'utf8')
   }
   return;
 }
+
+console.log(`@59: this file has been already fixed.
+  -stop-`)
+  return;
+
+/*****************
+  HERE revision-id
+*****************/
 
 let v =null;
 const selector = `section#new-products div.row`
@@ -92,7 +119,9 @@ function set_meta($, key, value) {
 /*
     Upgrade new-products
     - locate section#new-products
-
+    - for each article, collect sku, id and rewrite in correct syntax
+    - add script new-products.js at end of body.
+    - write meta-tag revison 1.0
 */
 
 function upgrade_new_products($) {
@@ -119,6 +148,8 @@ function upgrade_new_products($) {
     console.log(`id:${$(e).attr('id')} sku[${i}]:${sku}`)
 
   })
+
+
 
   set_meta($,'e3:revision', '1.0')
   console.log(`e3:revision: ${get_meta($,'e3:revision')}`);
