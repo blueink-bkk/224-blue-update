@@ -9,7 +9,7 @@ function fix_yaml(data) { // NO.
   assert(!v[0])
   assert(v.length == 3)
   v[1] = v[1].replace(/^([^:]*):\s*/gm,'$1<<>>').replace(/:/g,'~!~').replace(/<<>>/g,': ')
-  console.log(v.join('---'))
+//  console.log(v.join('---'))
   return v.join('---')
 }
 
@@ -25,7 +25,7 @@ function md2html(data) {
   var json = yaml.safeLoad(v[1], 'utf8');
 
 
-  console.log({json})
+  //console.log({json})
   if (json.format == 'raw-html') {
     return {data:json, html:v[2]}
   }

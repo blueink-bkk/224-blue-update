@@ -11,15 +11,17 @@ const walk = require('klaw-sync')
 const argv = require('yargs')
   .alias('h','help')
   .alias('v','verbose').count('verbose')
-  .alias('i','input-dir')
+//  .alias('i','input-dir')
   .alias('n','dry-run')
   .options({
     'dry-run':  {type:'boolean', default:false},
     'force': {type:'boolean', default:false},
   }).argv;
 
+const input_folder = argv._[0];
+
 const {verbose,
-  'input-dir':input_folder,
+//  'input-dir':input_folder,
   'dry-run':dry_run,
   help
 } = argv;
@@ -29,7 +31,6 @@ if (help) {
     HELP:
     -h (--help)     : this help.
     -v (--verbose)
-    -i (--input)    : folder to process
     -n (--dry-run)  : do not write
     `);
   return;
